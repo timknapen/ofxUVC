@@ -9,12 +9,10 @@ void ofxUVC::useCamera(int vendorId, int productId, int _interfaceNum){
 	cameraControl = [[UVCCameraControl alloc] initWithVendorID:vendorId productID:productId interfaceNum:_interfaceNum];
     cameraInited = true;
 }
-
 void ofxUVC::useCamera(int locationID){
 	cameraControl = [[UVCCameraControl alloc] initWithLocationID:locationID];
 	cameraInited = true;
 }
-
 ofxUVC::~ofxUVC(){
     if(cameraInited){
         [cameraControl release];

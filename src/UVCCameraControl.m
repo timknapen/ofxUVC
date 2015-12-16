@@ -343,7 +343,7 @@ const uvc_controls_t uvc_controls = {
 }
 
 - (BOOL)setExposure:(float)value {
-	//printf("exposure value %f \n",value);
+	printf("exposure value %f \n",value);
 	value = 1 - value;
 	return [self setValue:value forControl:&uvc_controls.exposure];
 }
@@ -404,7 +404,7 @@ const uvc_controls_t uvc_controls = {
 	return ( intval == 0x01 ? YES : NO );
 }
 - (BOOL)setAbsoluteFocus:(float)value {
-	// printf("focus value %f \n",value);
+	printf("focus value %f \n",value);
 	//value = 1 - value;
 	return [self setValue:value forControl:&uvc_controls.focus];
 	
