@@ -325,7 +325,7 @@ const uvc_controls_t uvc_controls = {
 
 - (BOOL)setAutoExposure:(BOOL)enabled {
 	int intval = (enabled ? 0x08 : 0x01); // "auto exposure modes" ar NOT boolean (on|off) as it seems
-	printf("setAutoExposure = %i \n",enabled);
+	// printf("setAutoExposure = %i \n",enabled);
 	return [self setData:intval 
 			  withLength:uvc_controls.autoExposure.size 
 			 forSelector:uvc_controls.autoExposure.selector 
@@ -343,7 +343,7 @@ const uvc_controls_t uvc_controls = {
 }
 
 - (BOOL)setExposure:(float)value {
-	printf("exposure value %f \n",value);
+	// printf("exposure value %f \n",value);
 	value = 1 - value;
 	return [self setValue:value forControl:&uvc_controls.exposure];
 }
@@ -386,7 +386,7 @@ const uvc_controls_t uvc_controls = {
 - (BOOL)setAutoFocus:(BOOL)enabled {
 	//int intval = (enabled ? 0x08 : 0x01); //that's how eposure does it
 	int intval = (enabled ? 0x01 : 0x00); //that's how white balance does it
-	printf("setAutoFocus = %i \n",enabled);
+	// printf("setAutoFocus = %i \n",enabled);
 	return [self setData:intval 
 			  withLength:uvc_controls.autoFocus.size 
 			 forSelector:uvc_controls.autoFocus.selector 
@@ -404,7 +404,7 @@ const uvc_controls_t uvc_controls = {
 	return ( intval == 0x01 ? YES : NO );
 }
 - (BOOL)setAbsoluteFocus:(float)value {
-	printf("focus value %f \n",value);
+	// printf("focus value %f \n",value);
 	//value = 1 - value;
 	return [self setValue:value forControl:&uvc_controls.focus];
 	
@@ -419,7 +419,7 @@ const uvc_controls_t uvc_controls = {
 //white balance
 - (BOOL)setAutoWhiteBalance:(BOOL)enabled {
 	int intval = (enabled ? 0x01 : 0x00);
-	printf("setAutoWhiteBalance = %i \n",enabled);
+	// printf("setAutoWhiteBalance = %i \n",enabled);
 	return [self setData:intval 
 			  withLength:uvc_controls.autoWhiteBalance.size 
 			 forSelector:uvc_controls.autoWhiteBalance.selector 
@@ -437,7 +437,7 @@ const uvc_controls_t uvc_controls = {
 }
 
 - (BOOL)setWhiteBalance:(float)value {
-	printf("whiteBalance value %f \n",value);
+	// printf("whiteBalance value %f \n",value);
 	return [self setValue:value forControl:&uvc_controls.whiteBalance];
 }
 
@@ -448,7 +448,7 @@ const uvc_controls_t uvc_controls = {
 //---rest---
 
 - (BOOL)setGain:(float)value {
-	printf("gain value %f \n",value);
+	// printf("gain value %f \n",value);
 	
 	return [self setValue:value forControl:&uvc_controls.gain];
 }
@@ -458,7 +458,7 @@ const uvc_controls_t uvc_controls = {
 }
 
 - (BOOL)setBrightness:(float)value {
-	printf("brightness value %f \n",value);
+	// printf("brightness value %f \n",value);
 	return [self setValue:value forControl:&uvc_controls.brightness];
 }
 
