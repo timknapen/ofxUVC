@@ -384,7 +384,7 @@ const uvc_controls_t uvc_controls = {
 
 //-----focus
 - (BOOL)setAutoFocus:(BOOL)enabled {
-	//int intval = (enabled ? 0x08 : 0x01); //that's how eposure does it
+	//int intval = (enabled ? 0x08 : 0x01); //that's how exposure does it
 	int intval = (enabled ? 0x01 : 0x00); //that's how white balance does it
 	// printf("setAutoFocus = %i \n",enabled);
 	return [self setData:intval 
