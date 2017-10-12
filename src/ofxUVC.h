@@ -39,7 +39,9 @@ class ofxUVC {
     bool getAutoExposure();
     void setExposure(float value);
     float getExposure();
-    
+	
+	//MARK: LED
+	void setLED(bool enabled);
     void setAutoFocus(bool enabled);
     bool getAutoFocus();
     void setAbsoluteFocus(float value);

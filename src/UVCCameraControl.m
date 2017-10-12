@@ -28,6 +28,12 @@ const uvc_controls_t uvc_controls = {
 		.selector = 0x08, //CT_FOCUS_AUTO_CONTROL
 		.size = 1,
 	},
+	//MARK: LED
+	.ledStatus = {
+		.unit = 0x0B, //UVC_INPUT_TERMINAL_ID,
+		.selector = 0x09, //////<<<<<<<<<<<<<<<<>>>LED
+		.size = 5,
+	},
 	.focus = {
 		.unit = UVC_INPUT_TERMINAL_ID,
 		.selector = 0x06, //CT_FOCUS_ABSOLUTE_CONTROL
@@ -141,7 +147,11 @@ const uvc_controls_t uvc_controls = {
 		IOUSBDeviceInterface **deviceInterface = NULL;
 		IOCFPlugInInterface	**plugInInterface = NULL;
 		SInt32 score;
-		kern_return_t kr = IOCreatePlugInInterfaceForService( camera, kIOUSBDeviceUserClientTypeID, kIOCFPlugInInterfaceID, &plugInInterface, &score );
+		kern_return_t kr = IOCreatePlugInInterfaceForService( camera,
+															 kIOUSBDeviceUserClientTypeID,
+															 kIOCFPlugInInterfaceID,
+															 &plugInInterface,
+															 &score );
         if( (kIOReturnSuccess != kr) || !plugInInterface ) {
             NSLog( @"CameraControl Error: IOCreatePlugInInterfaceForService returned 0x%08x.", kr );
 			return self;
@@ -380,6 +390,25 @@ const uvc_controls_t uvc_controls = {
 	return 1 - value;
 }
 
+//MARK: LED
+- (BOOL)setLED:(bool)enabled {
+	/*
+	 Auto_to_on:  0x0300010301 --> 0x0300010101
+	 Auto_to_off: 0x0300010301 --> 0x0300010001
+	 Off_to_Auto: 0x0300010001 --> 0x0300010301
+	 Off_to_on:   0x0300010001 --> 0x0300010101
+	 On_to_off:   0x0300010101 --> 0x0300010001
+	 Off_to_auto: 0x0300010001 --> 0x0300010301
+	 On_to_auto:  0x0300010101 --> 0x0300010301
+	 */
+	int intval =  (enabled ? 0x101 : 0x001);
+	printf("setLED = %i \n", intval);
+	return [self setData:intval
+			  withLength:uvc_controls.ledStatus.size
+			 forSelector:uvc_controls.ledStatus.selector
+					  at:uvc_controls.ledStatus.unit];
+	
+}
 
 
 //-----focus

@@ -45,6 +45,7 @@ typedef struct {
 	uvc_control_info_t whiteBalance;
 	uvc_control_info_t autoWhiteBalance;
     uvc_control_info_t incremental_exposure;
+	uvc_control_info_t ledStatus;
 } uvc_controls_t ;
 
 
@@ -103,6 +104,8 @@ typedef struct {
 - (BOOL)setSharpness:(float)value;
 - (float)getSharpness;
 
+// TIM
+- (BOOL)setLED:(BOOL)enabled;
 
 
 @end

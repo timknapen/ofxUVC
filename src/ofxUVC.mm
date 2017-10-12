@@ -6,10 +6,16 @@ ofxUVC::ofxUVC(){
 }
 
 void ofxUVC::useCamera(int vendorId, int productId, int _interfaceNum){
+	if(cameraInited){
+		[cameraControl release];
+	}
 	cameraControl = [[UVCCameraControl alloc] initWithVendorID:vendorId productID:productId interfaceNum:_interfaceNum];
     cameraInited = true;
 }
 void ofxUVC::useCamera(int locationID){
+	if(cameraInited){
+		[cameraControl release];
+	}
 	cameraControl = [[UVCCameraControl alloc] initWithLocationID:locationID];
 	cameraInited = true;
 }
@@ -37,6 +43,12 @@ void ofxUVC::setExposure(float value){
 
 float ofxUVC::getExposure(){
     return [cameraControl getExposure];
+}
+
+//MARK: LED
+
+void ofxUVC::setLED(bool enabled){
+	[cameraControl setLED:enabled];
 }
 
 void ofxUVC::setAutoFocus(bool enabled){
