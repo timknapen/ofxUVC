@@ -152,17 +152,17 @@ const uvc_controls_t uvc_controls = {
 															 kIOCFPlugInInterfaceID,
 															 &plugInInterface,
 															 &score );
-        if( (kIOReturnSuccess != kr) || !plugInInterface ) {
-            NSLog( @"CameraControl Error: IOCreatePlugInInterfaceForService returned 0x%08x.", kr );
+		if( (kIOReturnSuccess != kr) || !plugInInterface ) {
+			NSLog( @"CameraControl Error: IOCreatePlugInInterfaceForService returned 0x%08x.", kr );
 			return self;
-        }
+		}
 		
-        HRESULT res = (*plugInInterface)->QueryInterface(plugInInterface, CFUUIDGetUUIDBytes(kIOUSBDeviceInterfaceID), (LPVOID*) &deviceInterface );
-        (*plugInInterface)->Release(plugInInterface);
-        if( res || deviceInterface == NULL ) {
-            NSLog( @"CameraControl Error: QueryInterface returned %d.\n", (int)res );
-            return self;
-        }
+		HRESULT res = (*plugInInterface)->QueryInterface(plugInInterface, CFUUIDGetUUIDBytes(kIOUSBDeviceInterfaceID), (LPVOID*) &deviceInterface );
+		(*plugInInterface)->Release(plugInInterface);
+		if( res || deviceInterface == NULL ) {
+			NSLog( @"CameraControl Error: QueryInterface returned %d.\n", (int)res );
+			return self;
+		}
 		
 		interface = [self getControlInferaceWithDeviceInterface:deviceInterface];
 	}
@@ -258,8 +258,8 @@ const uvc_controls_t uvc_controls = {
 
 
 - (long) getInfoForControl:(uvc_control_info_t *)control{
-    return [self getDataFor:UVC_GET_INFO withLength:1  fromSelector:control->selector at:control->unit];
-    
+	return [self getDataFor:UVC_GET_INFO withLength:1  fromSelector:control->selector at:control->unit];
+	
 }
 
 - (BOOL)setData:(long)value withLength:(int)length forSelector:(int)selector at:(int)unitId {
@@ -336,17 +336,17 @@ const uvc_controls_t uvc_controls = {
 - (BOOL)setAutoExposure:(BOOL)enabled {
 	int intval = (enabled ? 0x08 : 0x01); // "auto exposure modes" ar NOT boolean (on|off) as it seems
 	// printf("setAutoExposure = %i \n",enabled);
-	return [self setData:intval 
-			  withLength:uvc_controls.autoExposure.size 
-			 forSelector:uvc_controls.autoExposure.selector 
+	return [self setData:intval
+			  withLength:uvc_controls.autoExposure.size
+			 forSelector:uvc_controls.autoExposure.selector
 					  at:uvc_controls.autoExposure.unit];
 	
 }
 
 - (BOOL)getAutoExposure {
-	int intval = [self getDataFor:UVC_GET_CUR 
-					   withLength:uvc_controls.autoExposure.size 
-					 fromSelector:uvc_controls.autoExposure.selector 
+	int intval = [self getDataFor:UVC_GET_CUR
+					   withLength:uvc_controls.autoExposure.size
+					 fromSelector:uvc_controls.autoExposure.selector
 							   at:uvc_controls.autoExposure.unit];
 	
 	return ( intval == 0x08 ? YES : NO );
@@ -359,28 +359,28 @@ const uvc_controls_t uvc_controls = {
 }
 
 - (void) incrementExposure {
-    [self setData:0x01 
-       withLength:uvc_controls.exposure.size 
-      forSelector:uvc_controls.exposure.selector 
-               at:uvc_controls.exposure.unit];
+	[self setData:0x01
+	   withLength:uvc_controls.exposure.size
+	  forSelector:uvc_controls.exposure.selector
+			   at:uvc_controls.exposure.unit];
 }
 
 - (void) decrementExposure {
-    [self setData:0xFF
-       withLength:uvc_controls.exposure.size 
-      forSelector:uvc_controls.exposure.selector 
-               at:uvc_controls.exposure.unit];
+	[self setData:0xFF
+	   withLength:uvc_controls.exposure.size
+	  forSelector:uvc_controls.exposure.selector
+			   at:uvc_controls.exposure.unit];
 }
 
 - (void) setDefaultExposure {
-    [self setData:0x00
-       withLength:uvc_controls.exposure.size 
-      forSelector:uvc_controls.exposure.selector 
-               at:uvc_controls.exposure.unit];
+	[self setData:0x00
+	   withLength:uvc_controls.exposure.size
+	  forSelector:uvc_controls.exposure.selector
+			   at:uvc_controls.exposure.unit];
 }
 
 - (uvc_controls_t *) getControls{
-    return (uvc_controls_t *)&uvc_controls;
+	return (uvc_controls_t *)&uvc_controls;
 }
 
 
@@ -393,16 +393,12 @@ const uvc_controls_t uvc_controls = {
 //MARK: LED
 - (BOOL)setLED:(bool)enabled {
 	/*
-	 Auto_to_on:  0x0300010301 --> 0x0300010101
-	 Auto_to_off: 0x0300010301 --> 0x0300010001
-	 Off_to_Auto: 0x0300010001 --> 0x0300010301
-	 Off_to_on:   0x0300010001 --> 0x0300010101
-	 On_to_off:   0x0300010101 --> 0x0300010001
-	 Off_to_auto: 0x0300010001 --> 0x0300010301
-	 On_to_auto:  0x0300010101 --> 0x0300010301
+	 on:   0x0300010101
+	 off:   0x0300010001
+	 Auto:  0x0300010301
 	 */
 	int intval =  (enabled ? 0x101 : 0x001);
-	printf("setLED = %i \n", intval);
+	//printf("setLED = %i \n", intval);
 	return [self setData:intval
 			  withLength:uvc_controls.ledStatus.size
 			 forSelector:uvc_controls.ledStatus.selector
@@ -416,16 +412,16 @@ const uvc_controls_t uvc_controls = {
 	//int intval = (enabled ? 0x08 : 0x01); //that's how exposure does it
 	int intval = (enabled ? 0x01 : 0x00); //that's how white balance does it
 	// printf("setAutoFocus = %i \n",enabled);
-	return [self setData:intval 
-			  withLength:uvc_controls.autoFocus.size 
-			 forSelector:uvc_controls.autoFocus.selector 
+	return [self setData:intval
+			  withLength:uvc_controls.autoFocus.size
+			 forSelector:uvc_controls.autoFocus.selector
 					  at:uvc_controls.autoFocus.unit];
 	
 }
 - (BOOL)getAutoFocus {
-	int intval = [self getDataFor:UVC_GET_CUR 
-					   withLength:uvc_controls.autoFocus.size 
-					 fromSelector:uvc_controls.autoFocus.selector 
+	int intval = [self getDataFor:UVC_GET_CUR
+					   withLength:uvc_controls.autoFocus.size
+					 fromSelector:uvc_controls.autoFocus.selector
 							   at:uvc_controls.autoFocus.unit];
 	
 	//return ( intval == 0x08 ? YES : NO );
